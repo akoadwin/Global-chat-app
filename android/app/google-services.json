@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "318843777175",
+    "project_id": "globalchatproject-1101",
+    "storage_bucket": "globalchatproject-1101.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318843777175:android:38883199695dd28abe39d2",
+        "android_client_info": {
+          "package_name": "com.testapps.global_chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvh_GQ_h0VL-_1HgDas39vIJGDd8DU1b0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

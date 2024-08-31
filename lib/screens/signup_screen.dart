@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:global_chat_app/controllers/signup_controller.dart';
 import 'package:global_chat_app/screens/login_screen.dart';
+import 'package:global_chat_app/widgets/loading_widget.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -16,7 +17,11 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController country = TextEditingController();
+  TextEditingController lastname = TextEditingController();
+
   var userForm = GlobalKey<FormState>();
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +65,23 @@ class _SignupScreenState extends State<SignupScreen> {
                       border: UnderlineInputBorder(
                           borderRadius: BorderRadius.circular(8)),
                       label: const Text("Name")),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Last name is required";
+                    }
+                    return null;
+                  },
+                  controller: lastname,
+                  decoration: InputDecoration(
+                      border: UnderlineInputBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      label: const Text("Last Name")),
                 ),
                 const SizedBox(
                   height: 25,
@@ -129,15 +151,23 @@ class _SignupScreenState extends State<SignupScreen> {
                                   WidgetStatePropertyAll(Colors.greenAccent)),
                           onPressed: () async {
                             if (userForm.currentState!.validate()) {
-                              SignupController.createAccount(
+                              isLoading = true;
+                              setState(() {});
+                              await SignupController.createAccount(
                                   email: email.text,
+                                  lastname: lastname.text,
                                   context: context,
                                   country: country.text,
                                   name: name.text,
                                   password: password.text);
+
+                              isLoading = false;
+                              setState(() {});
                             }
                           },
-                          child: const Text("Create Account")),
+                          child: isLoading
+                              ? const LoadingWidget()
+                              : const Text("Create Account")),
                     ),
                   ],
                 ),

@@ -4,11 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:global_chat_app/screens/dashboard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:global_chat_app/screens/splash_screen.dart';
 
 class SignupController {
   static Future<void> createAccount(
       {required String email,
       required String name,
+      required String lastname,
       required String country,
       required BuildContext context,
       required String password}) async {
@@ -21,6 +23,7 @@ class SignupController {
 
       Map<String, dynamic> data = {
         "name": name,
+        "lastname": lastname,
         "email": email,
         "country": country,
         "id": userId.toString()
@@ -32,7 +35,7 @@ class SignupController {
       }
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
-        return const DashboardScreen();
+        return const SplashScreen();
       }), (route) {
         return false;
       });

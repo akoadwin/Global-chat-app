@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:global_chat_app/controllers/login_controller.dart';
 import 'package:global_chat_app/screens/signup_screen.dart';
+import 'package:global_chat_app/widgets/loading_widget.dart';
+import 'package:nuts_activity_indicator/nuts_activity_indicator.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  bool isLoading = false;
 
   var userForm = GlobalKey<FormState>();
 
@@ -94,13 +98,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   WidgetStatePropertyAll(Colors.greenAccent)),
                           onPressed: () async {
                             if (userForm.currentState!.validate()) {
-                              LoginController.loginAccount(
+                              isLoading = true;
+                              setState(() {});
+                              await LoginController.loginAccount(
                                   email: email.text,
                                   context: context,
                                   password: password.text);
+
+                              isLoading = false;
+                              setState(() {});
                             }
                           },
-                          child: Text("Login")),
+                          child: isLoading
+                              ? const LoadingWidget()
+                              : const Text("Login")),
                     ),
                   ],
                 ),
